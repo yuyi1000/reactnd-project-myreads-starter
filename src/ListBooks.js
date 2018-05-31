@@ -42,8 +42,6 @@ class ListBooks extends Component {
   }
 
   updateSelectedBook = (newShelf, book) => {
-    console.log(newShelf)
-    console.log(book)
     if (book.shelf !== newShelf) {
       const prevShelf = book.shelf
       if (prevShelf === 'currentlyReading') {
@@ -160,9 +158,7 @@ class ListBooks extends Component {
             </div>
           </div>
         </div>
-        <div className="open-search">
-          <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-        </div>
+
       </div>
     )
   }
