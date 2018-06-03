@@ -1,102 +1,26 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import EachBook from './EachBook'
 
 class ListBooks extends Component {
 
-  state = {
-    currentlyReadingList: [],
-    wantToReadList: [],
-    readList: []
+  static propTypes = {
+    currentlyReadingList: PropTypes.array.isRequired,
+    wantToReadList: PropTypes.array.isRequired,
+    readList: PropTypes.array.isRequired,
+    updateSelectedBook: PropTypes.func.isRequired
   }
 
-  componentDidMount() {
-    BooksAPI.getAll().then((books) => {
-      // console.log(books)
-      books.map( (book) => {
-        // console.log(book)
-        let shelf = book.shelf
-        if (shelf === 'currentlyReading') {
-          this.setState((prevState) => {
-            let currentlyReadingList = prevState.currentlyReadingList.slice()
-            currentlyReadingList.push(book)
-            return {currentlyReadingList: currentlyReadingList}
-          })
-        }
-        else if (shelf === 'wantToRead') {
-          this.setState((prevState) => {
-            let wantToReadList = prevState.wantToReadList.slice()
-            wantToReadList.push(book)
-            return {wantToReadList: wantToReadList}
-          })
-        }
-        else if (shelf === 'read') {
-          this.setState((prevState) => {
-            let readList = prevState.readList
-            readList.push(book)
-            return {readList: readList}
-          })
-        }
-      })
-    })
-  }
-
-  updateSelectedBook = (newShelf, book) => {
-    if (book.shelf !== newShelf) {
-      const prevShelf = book.shelf
-      if (prevShelf === 'currentlyReading') {
-        this.setState((prevState) => ({
-          currentlyReadingList: prevState.currentlyReadingList.filter((b) => b.id !== book.id)
-        }))
-      }
-      if (prevShelf === 'wantToRead') {
-        this.setState((prevState) => ({
-          wantToReadList: prevState.wantToReadList.filter((b) => b.id !== book.id)
-        }))
-      }
-      if (prevShelf === 'read') {
-        this.setState((prevState) => ({
-          readList: prevState.readList.filter((b) => b.id !== book.id)
-        }))
-      }
-
-      BooksAPI.update(book, newShelf)
-
-      book.shelf = newShelf
-      if (newShelf === 'currentlyReading') {
-        this.setState((prevState) => {
-          let currentlyReadingList = prevState.currentlyReadingList.slice()
-          currentlyReadingList.push(book)
-          return {currentlyReadingList: currentlyReadingList}
-        })
-      }
-      if (newShelf === 'wantToRead') {
-        this.setState((prevState) => {
-          let wantToReadList = prevState.wantToReadList.slice()
-          wantToReadList.push(book)
-          return {wantToReadList: wantToReadList}
-        })
-      }
-      if (newShelf === 'read') {
-        this.setState((prevState) => {
-          let readList = prevState.readList.slice()
-          readList.push(book)
-          return {readList: readList}
-        })
-      }
-
-
-    }
-  }
 
   render() {
-    const {currentlyReadingList, wantToReadList, readList} = this.state
+    const { currentlyReadingList, wantToReadList, readList, updateSelectedBook } = this.props
 
     const currentlyReadingListElement = currentlyReadingList.map((book) => {
       return (
         <EachBook key={book.id}
           book={book}
-          updateSelectedBook={this.updateSelectedBook}
+          updateSelectedBook={updateSelectedBook}
         />
       )
     })
@@ -105,7 +29,7 @@ class ListBooks extends Component {
       return (
         <EachBook key={book.id}
           book={book}
-          updateSelectedBook={this.updateSelectedBook}
+          updateSelectedBook={updateSelectedBook}
         />
       )
     })
@@ -114,7 +38,7 @@ class ListBooks extends Component {
       return (
         <EachBook key={book.id}
           book={book}
-          updateSelectedBook={this.updateSelectedBook}
+          updateSelectedBook={updateSelectedBook}
         />
       )
     })

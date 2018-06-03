@@ -8,11 +8,13 @@ class EachBook extends Component {
   }
 
   state = {
-    shelf: ''
+    shelf: 'none'
   }
 
   componentDidMount() {
-    this.setState({shelf: this.props.book.shelf})
+    if (this.props.book.shelf) {
+      this.setState({shelf: this.props.book.shelf})
+    }
   }
 
   updateShelf = (newShelf) => {
@@ -27,7 +29,7 @@ class EachBook extends Component {
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: '100%', height: '100%', backgroundImage: 'url(' + book.imageLinks.thumbnail + ')' }}></div>
+            <div className="book-cover" style={{ backgroundImage: (book.imageLinks? 'url(' + book.imageLinks.thumbnail + ')': '' )}}></div>
             <div className="book-shelf-changer">
               <select value={shelf} onChange={(event) => {updateSelectedBook(event.target.value, book); this.updateShelf(event.target.value)}}>
                 <option value="none" disabled>Move to...</option>
@@ -39,7 +41,9 @@ class EachBook extends Component {
             </div>
           </div>
           <div className="book-title">{book.title}</div>
-          <div className="book-authors">{book.authors[0]}</div>
+          {book.hasOwnProperty('authors') && (
+            <div className="book-authors">{book.authors[0]}</div>
+          )}
         </div>
       </li>
     )
