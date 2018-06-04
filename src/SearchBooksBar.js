@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 class SearchBooksBar extends Component {
   static propTypes = {
     updateSearchResultList: PropTypes.func.isRequired,
-    hideSearchPage: PropTypes.func.isRequired,
     clearSearchResultList: PropTypes.func.isRequired
   }
 
@@ -22,11 +22,11 @@ class SearchBooksBar extends Component {
 
   render() {
     const { query } = this.state
-    const { updateSearchResultList, hideSearchPage, clearSearchResultList } = this.props
+    const { updateSearchResultList, clearSearchResultList } = this.props
 
     return (
       <div className="search-books-bar">
-        <a className="close-search" onClick={() => {this.clearQuery(); hideSearchPage(); clearSearchResultList()}}>Close</a>
+        <Link className="close-search" to='/' onClick={() => {this.clearQuery(); clearSearchResultList()}}>Close</Link>
         <div className="search-books-input-wrapper">
           <input
             type="text"
