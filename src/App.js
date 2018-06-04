@@ -40,6 +40,7 @@ class BooksApp extends React.Component {
             return {readList: readList}
           })
         }
+        return null
       })
     })
   }
