@@ -4,7 +4,7 @@ import './App.css'
 import ListBooks from './ListBooks'
 import SearchBooksBar from './SearchBooksBar'
 import SearchBooksResult from './SearchBooksResult'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
@@ -118,32 +118,34 @@ class BooksApp extends React.Component {
 
       <div className="app">
 
-        <Route exact path='/' render={() => (
-          <ListBooks
-            currentlyReadingList={currentlyReadingList}
-            wantToReadList={wantToReadList}
-            readList={readList}
-            updateSelectedBook={this.updateSelectedBook}
-          />
-        )}/>
-
-        <Route path='/search' render={() => (
-          <div className="search-books">
-
-            <SearchBooksBar
-              updateSearchResultList={this.updateSearchResultList}
-              clearSearchResultList={this.clearSearchResultList}
-            />
-
-            <SearchBooksResult
+        <Switch>
+          <Route exact path='/' render={() => (
+            <ListBooks
               currentlyReadingList={currentlyReadingList}
               wantToReadList={wantToReadList}
               readList={readList}
-              searchResultList={searchResultList}
               updateSelectedBook={this.updateSelectedBook}
             />
-          </div>
-        )}/>
+          )}/>
+
+          <Route path='/search' render={() => (
+            <div className="search-books">
+
+              <SearchBooksBar
+                updateSearchResultList={this.updateSearchResultList}
+                clearSearchResultList={this.clearSearchResultList}
+              />
+
+              <SearchBooksResult
+                currentlyReadingList={currentlyReadingList}
+                wantToReadList={wantToReadList}
+                readList={readList}
+                searchResultList={searchResultList}
+                updateSelectedBook={this.updateSelectedBook}
+              />
+            </div>
+          )}/>
+        </Switch>
 
       </div>
     )
