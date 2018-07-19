@@ -32,7 +32,7 @@ class EachBook extends Component {
             <div className="book-cover" style={{ backgroundImage: (book.imageLinks? 'url(' + book.imageLinks.thumbnail + ')': '' )}}></div>
             <div className="book-shelf-changer">
               <select value={shelf} onChange={(event) => {updateSelectedBook(event.target.value, book); this.updateShelf(event.target.value)}}>
-                <option value="none" disabled>Move to...</option>
+                <option value="moveTo" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
                 <option value="read">Read</option>
